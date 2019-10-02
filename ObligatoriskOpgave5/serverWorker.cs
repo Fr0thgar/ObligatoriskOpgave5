@@ -39,6 +39,7 @@ namespace ObligatoriskOpgave5
         {
             TcpListener server = new TcpListener(IPAddress.Loopback, 4646);
             server.Start();
+            Console.WriteLine("I'm Working I hope");
 
             while (true)
             {

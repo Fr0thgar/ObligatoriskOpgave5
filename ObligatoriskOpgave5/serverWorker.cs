@@ -22,6 +22,10 @@ namespace ObligatoriskOpgave5
 {
     public class ServerWorker
     {
+        public ServerWorker()
+        {
+
+        }
 
         private static List<Book> books = new List<Book>()
         {
@@ -31,11 +35,10 @@ namespace ObligatoriskOpgave5
             new Book("Art of the Butt", "Ninja Sex Party", 999, "KJLLHNFUEN852")
         };
 
-        public ServerWorker()
+        public void Start()
         {
-
+            TcpListener server = new TcpListener(IPAddress.Loopback, 4646);
         }
-
        
     }
 }

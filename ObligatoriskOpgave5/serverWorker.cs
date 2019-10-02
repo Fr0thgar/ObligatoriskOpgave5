@@ -57,16 +57,59 @@ namespace ObligatoriskOpgave5
 
         private void DoClient(TcpClient socket)
         {
+
             using (StreamReader bookReader =
                 new StreamReader(socket.GetStream()))
             using (StreamWriter bookWriter = new StreamWriter(socket.GetStream()))
             {
-                string str = bookReader.ReadLine();
-                bookWriter.WriteLine(str);
-                bookWriter.Flush();
-            }
+                while (true)
+                {
 
+                    string str = bookReader.ReadLine();
+
+                    switch (str)
+                    {
+                        case "HentAlle":
+                            string s = bookReader.ReadLine();
+                            bookWriter.WriteLine(HentAlle());
+                            bookWriter.Flush();
+                            break;
+                        case "Hent":
+                            string isbnInput = bookReader.ReadLine();
+                            string output = Hent(isbnInput);
+                            bookWriter.WriteLine(output);
+                            bookWriter.Flush();
+                            break;
+                        case "Gem":
+                            string JsonInput = bookReader.ReadLine();
+                            Gem(JsonInput);
+                            break;
+                    }
+
+                   
+                    if (str == "end" || str == "End")
+                    {
+                        break;
+                    }
+                }
+            }
             socket?.Close();
+        }
+
+        private string HentAlle()
+        {
+            return JsonConvert.SerializeObject(books);
+        }
+
+        private string Hent(string isbn)
+        {
+            return JsonConvert.SerializeObject(books.Find(b => b.Isbn == isbn));
+        }
+
+        private void Gem(string JBook)
+        {
+            Book b = JsonConvert.DeserializeObject<Book>(JBook);
+            books.Add(b);
         }
     }
 }

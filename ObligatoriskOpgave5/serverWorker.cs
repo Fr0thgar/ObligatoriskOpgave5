@@ -38,8 +38,35 @@ namespace ObligatoriskOpgave5
         public void Start()
         {
             TcpListener server = new TcpListener(IPAddress.Loopback, 4646);
+            server.Start();
+
+            while (true)
+            {
+                TcpClient socket = server.AcceptTcpClient();
+
+                Task.Run(()
+                    =>
+                {
+                    TcpClient tmpsocket = socket;
+                    DoClient(tmpsocket);
+                });
+            }
+
         }
-       
+
+        private void DoClient(TcpClient socket)
+        {
+            using (StreamReader bookReader =
+                new StreamReader(socket.GetStream()))
+            using (StreamWriter bookWriter = new StreamWriter(socket.GetStream()))
+            {
+                string str = bookReader.ReadLine();
+                bookWriter.WriteLine(str);
+                bookWriter.Flush();
+            }
+
+            socket?.Close();
+        }
     }
 }
 

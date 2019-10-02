@@ -9,10 +9,4 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Library">
-      <HintPath>..\..\..\..\Desktop\3rd_semster_code\C#\ObligatoriskOpgave1\CSharpAndUnitTest\bin\Debug\netcoreapp2.1\Library.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
